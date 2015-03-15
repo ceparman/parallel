@@ -1,6 +1,17 @@
 
 
+if (! require(parallel,quietly = TRUE) ) 
+{ 
+  
+  install.packages('parallel',dep=TRUE,
+                   repos='http://cran.us.r-project.org/')
+}
+
+
+
+
 library(parallel)
+
 
 thermal<-function(iter=100,size=100,bound=sample(1:4,1))
 {
@@ -60,15 +71,12 @@ dev.off()
 
 
 cl<-makeCluster(detectCores())
-#t<-clusterCall(cl,rnorm,10000000)
-#mc.cores <- detectCores()
-#makeCluster
 
-t<-clusterCall(cl,thermal)
+t<-clusterCall(cl,thermal,iter=500)
 
 stopCluster(cl)
 
-#results<- mclapply(rep(100,10),thermal,mc.cores=mc.cores)
+
 
 
 
